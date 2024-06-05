@@ -11,7 +11,7 @@ export default function Fulldetails ({params}) {
  ;
  const postId = params.id
  const fetchPostById = async (id) => {
-   const { data } = await axios.get(`https://product-feedback-app-git-main-omotayo21s-projects.vercel.app/api/feedbacks/feedback/${id}?id=${id}`);
+   const { data } = await axios.get(`/api/feedbacks/feedback/${id}?id=${id}`);
    return data;
  };
 
