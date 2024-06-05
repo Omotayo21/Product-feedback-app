@@ -1,13 +1,14 @@
-# Expense Tracker App
+# Product feedback app
 
-This is a Expense Tracker app built with Next.js, Mongoose, MongoDB, jwttoken, bcryptjs, react-chart-js, Nodemailer, Tailwind CSS and Redux, . 
+This is a Product feedback app app built with Next.js, Mongoose, MongoDB, jwttoken, bcryptjs,  Nodemailer, Tailwind CSS . 
+Designand data gottend from a Front-end mentor challenge
 
 ## Features
 
-- **Add Expense and Revenue:**
- -Users can select categories, add expenses and revenues,
- -Users will get notified when expense is sucessfully added
- -Users can view their transaction history in the transaction page
+- **Create feedbacks:**
+ -Users can sign up and login and logout seamlessly,
+ -Users can create a feedback and can comment and reply to a feedback,
+ -Users can upvote a particular feedback they like
 
 - **User Interface:**
   - Responsive design using Tailwind CSS.
