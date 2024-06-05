@@ -5,7 +5,7 @@ import Comment from '../../../models/commentModel.mjs'
 import User from '../../../models/userModel.mjs'
 import Replies from '../../../models/repliesModel.mjs'
 
-export async function GET(req, res) {
+export async function GET(req) {
   await connect();
 
   try {
