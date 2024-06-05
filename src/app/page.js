@@ -90,7 +90,7 @@ const Page = () => {
               <div key={post.id} className="">
                 {" "}
                 <Link
-                  href={`/home/${post.id}`}
+                  href={`/login`}
                   className="border-2 border-blue-700 cursor-pointer flex flex-row gap-x-8 lg:w-[65rem] sm:w-full sm:-ml-4 p-4 rounded-md bg-gray-100"
                 >
                   <p className="flex lg:flex-col sm:flex-row sm:text-sm font-semibold bg-gray-300 p-2 w- lg:h-12 sm:h-10 rounded-md">

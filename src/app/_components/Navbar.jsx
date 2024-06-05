@@ -34,7 +34,7 @@ const Navbar = ({datalength, onSort}) => {
             </button>
            { token ? ( <button onClick={logout} className="">
               <SignOut size={44} className="bg-white text-black p-4 rounded-md" />{" "}
-            </button>): null}
+            </button>) : null}
            
           </div>
         </div>
