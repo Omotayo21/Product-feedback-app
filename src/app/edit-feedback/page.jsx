@@ -42,7 +42,7 @@ const CreateFeedback = () => {
           <div className="w-full bg-red-500 rounded-lg shadow border sm:max-w-md  border-blue-700">
             <div className="p-6 space-y-4 sm:p-8 ">
               <h1 className="lg:text-[1.35rem] font-bold  tracking-tight text-blue-700 sm:text-2xl mt-4">
-                Editing 'Add a dark theme option'
+                Editing &apos;Add a dark theme option&apos;
               </h1>
               <form
                 onSubmit={(e) => {

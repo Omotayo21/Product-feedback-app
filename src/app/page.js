@@ -120,7 +120,7 @@ const Page = () => {
               </div>
             ))
           ) : (
-            <Image src={empty} className="ml-12 w-24 h-24" />
+            <Image src={empty} alt="empty image" className="ml-12 w-24 h-24" />
           )}
         </div>
       </Suspense>
