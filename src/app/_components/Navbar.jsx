@@ -2,9 +2,13 @@
 import React from 'react'
 import { Medal, SignOut} from 'phosphor-react'
 import Link from 'next/link'
+import axios from 'axios'
+import {toast} from 'react-toastify'
+import useRouter from 'next/navigation'
 
 
 const Navbar = ({datalength, onSort}) => {
+  const router = useRouter()
  const logout = async () => {
    try {
      await axios.get("/api/users/logout");
