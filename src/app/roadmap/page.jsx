@@ -274,7 +274,7 @@ const PostCard = ({ post, status, borderColor, dotColor, refetch }) => {
       <div className="flex flex-col gap-y-2">
         <p className="text-blue-900 font-bold">{post.title}</p>
         <p className="text-blue-900 text-sm">{post.description}</p>
-        <div className="bg-gray-200 rounded-md p-2 text-blue-900 font-bold text-sm w-9">
+        <div className="bg-gray-200 rounded-md p-2 text-blue-900 font-bold text-sm ">
           <p>{post.category}</p>
         </div>
       </div>
