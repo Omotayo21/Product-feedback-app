@@ -16,7 +16,7 @@ export async function PATCH(request) {
    // const feedbackId = searchParams.get("id");
 //const feedbackId = request.url.split('/').pop()
 
-    const urlParts = req.url.split('/');
+    const urlParts = request.url.split('/');
     const feedbackId = urlParts[urlParts.length - 2]
     const user = await User.findById(dataId);
     if (!user) {
