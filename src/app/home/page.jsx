@@ -36,7 +36,7 @@ const PostList = () => {
  };
  useEffect(() => {
    getUserDetails();
-  fetchPosts()
+  refetch()
  }, []);
   
  const [selectedCategory, setSelectedCategory] = useState('All')
