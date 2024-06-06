@@ -9,7 +9,8 @@ export async function GET(request) {
   await connect();
 
   try {
-  const { searchParams } = new URL(request.url)
+    const { url} = request;
+  const { searchParams } = new URL(url, `http://${request.headers.host}`)
   const id = searchParams.get('id')
 
    if(!id){throw new Error ('missing id ooo')}
