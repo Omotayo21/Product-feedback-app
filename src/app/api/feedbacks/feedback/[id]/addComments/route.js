@@ -45,9 +45,12 @@ const { newCommentText, dataId } = reqBody;
   
 };
 export async function DELETE(request){
-        const { searchParams } = new URL(request.url);
-        const commentId = searchParams.get("id");
-try {
+        //const { searchParams } = new URL(request.url);
+       // const commentId = searchParams.get("id");
+const urlParts = request.url.split('/');
+    const commentId = urlParts[urlParts.length - 2]
+  
+  try {
     const comment = await Comment.findByIdAndDelete(commentId);
  
       console.log("deleted sucess")
