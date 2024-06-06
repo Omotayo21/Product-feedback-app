@@ -9,9 +9,11 @@ export async function GET(request) {
   await connect();
 
   try {
-    const { url} = request;
-  const { searchParams } = new URL(url, `http://${request.headers.host}`)
-  const id = searchParams.get('id')
+    //const { url} = request;
+  //const { searchParams } = new URL(url, `http://${request.headers.host}`)
+ // const id = searchParams.get('id')
+
+ const {id} = request.query
 
    if(!id){throw new Error ('missing id ooo')}
     const feedbacks = await Feedback.findById(id)

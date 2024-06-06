@@ -50,7 +50,7 @@ const cancel = () => {
    getUserDetails();
  }, []);
 const fetchPostById = async (id) => {
-  const { data } = await axios.get(`https://product-feedback-app-omotayo21s-projects.vercel.app/api/feedbacks/feedback/${id}?id=${id}`);
+  const { data } = await axios.get(`/api/feedbacks/feedback/${id}`);
   return data;
 }
 
