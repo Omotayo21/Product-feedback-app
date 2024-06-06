@@ -4,7 +4,7 @@ import { Medal, SignOut} from 'phosphor-react'
 import Link from 'next/link'
 import axios from 'axios'
 import {toast} from 'react-toastify'
-import useRouter from 'next/navigation'
+import {useRouter} from 'next/navigation'
 
 
 const Navbar = ({datalength, onSort}) => {

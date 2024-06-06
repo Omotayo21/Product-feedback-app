@@ -35,11 +35,17 @@ if (!MONGODB_URI) {
 
 export async function connect() {
   try {
-    await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(MONGODB_URI);
     console.log('MongoDB connected successfully');
+    const connection = mongoose.connection;
+
+    connection.on("connected", () => {
+      console.log("MONGODB connected successfully");
+    });
+    connection.on("error", (err) => {
+      console.log("connection error, ensure mongodb is working " + err);
+      process.exit();
+    });
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);
