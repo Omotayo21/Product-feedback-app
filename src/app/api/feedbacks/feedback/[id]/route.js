@@ -15,10 +15,10 @@ export async function GET(request) {
  // const id = searchParams.get('id')
 
  //const {id} = request.query
-
- const {query} = parse(request.url, true)
- const {id} = query
-
+console.log(request.url)
+console.log(request.query)
+ //const {query} = parse(request.url, true)
+const {id} = request.query
    if(!id){throw new Error ('missing id ooo')}
     const feedbacks = await Feedback.findById(id)
       .populate({
