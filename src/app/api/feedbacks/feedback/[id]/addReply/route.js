@@ -13,10 +13,10 @@ export async function POST(request) {
     const reqBody = await request.json();
     const { newReplyText, username, dataId } = reqBody;
 
-    const { searchParams } = new URL(request.url);
-    const commentId = searchParams.get("id");
+   // const { searchParams } = new URL(request.url);
+   // const commentId = searchParams.get("id");
     
-
+const commentId = request.url.split('/').pop()
     const user = await User.findById(dataId);
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
