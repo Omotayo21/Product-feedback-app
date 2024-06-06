@@ -5,8 +5,10 @@ import Comment from '../../../models/commentModel.mjs'
 import User from '../../../models/userModel.mjs'
 import Replies from '../../../models/repliesModel.mjs'
 
+
+connect()
 export async function GET(req) {
-  await connect();
+
 
   try {
     const feedbacks = await Feedback.find()

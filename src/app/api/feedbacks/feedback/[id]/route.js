@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Comment from "../../../../models/commentModel.mjs";
 import User from "../../../../models/userModel.mjs";
 import Replies from "../../../../models/repliesModel.mjs";
+import {parse} from 'url'
 
 export async function GET(request) {
   await connect();
@@ -13,7 +14,10 @@ export async function GET(request) {
   //const { searchParams } = new URL(url, `http://${request.headers.host}`)
  // const id = searchParams.get('id')
 
- const {id} = request.query
+ //const {id} = request.query
+
+ const {query} = parse(request.url, true)
+ const {id} = query
 
    if(!id){throw new Error ('missing id ooo')}
     const feedbacks = await Feedback.findById(id)
