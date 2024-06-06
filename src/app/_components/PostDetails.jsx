@@ -50,7 +50,7 @@ const cancel = () => {
    getUserDetails();
  }, []);
 const fetchPostById = async (id) => {
-  const { data } = await axios.get(`/api/feedbacks/feedback/${id}?id=${id}`);
+  const { data } = await axios.get(`https://product-feedback-app-omotayo21s-projects.vercel.app/api/feedbacks/feedback/${id}?id=${id}`);
   return data;
 }
 
@@ -97,7 +97,7 @@ setloading(true)
   const handleReplySubmit = async (commentId, username ) => {
     setloading(true);
 try {
-  const response = await axios.post(`/api/feedbacks/feedback/${commentId}/addReply?id=${commentId}`, {
+  const response = await axios.post(`https://product-feedback-app-omotayo21s-projects.vercel.app/api/feedbacks/feedback/${commentId}/addReply?id=${commentId}`, {
     newReplyText,
    username,
     dataId,
@@ -144,7 +144,7 @@ console.error('Error adding reply', error)
  const handleUpvote = async (feedbackId) => {
    try {
      await axios.patch(
-       `http://localhost:3000/api/feedbacks/feedback/${feedbackId}/upvotes?id=${String(feedbackId)}`,
+       `https://product-feedback-app-omotayo21s-projects.vercel.app/api/feedbacks/feedback/${feedbackId}/upvotes?id=${String(feedbackId)}`,
        {
          dataId : userId._id
        }
