@@ -80,7 +80,7 @@ const postComment = async () => {
 setloading(true)
     try {
       const response = await axios.post(
-        `/api/feedbacks/feedback/${postId}/addComments?id=${postId}`,
+        `/api/feedbacks/feedback/${postId}/addComments`,
         { newCommentText, dataId }
       );
       console.log('Comment added:', response.data);
@@ -97,7 +97,7 @@ setloading(true)
   const handleReplySubmit = async (commentId, username ) => {
     setloading(true);
 try {
-  const response = await axios.post(`https://product-feedback-app-omotayo21s-projects.vercel.app/api/feedbacks/feedback/${commentId}/addReply?id=${commentId}`, {
+  const response = await axios.post(`/api/feedbacks/feedback/${commentId}/addReply`, {
     newReplyText,
    username,
     dataId,
@@ -118,7 +118,7 @@ console.error('Error adding reply', error)
     setloading(true)
   try {
     await axios.delete(
-      `/api/feedbacks/feedback/${postId}/addComments?id=${postId}`
+      `/api/feedbacks/feedback/${postId}/addComments`
     );
     refetch();
     setIsPopUp(null);
@@ -131,7 +131,7 @@ console.error('Error adding reply', error)
    const deleteReply = async (replyId) => {
      try {
        await axios.delete(
-         `/api/feedbacks/feedback/${replyId}/addReply?id=${replyId}`
+         `/api/feedbacks/feedback/${replyId}/addReply`
        );
        refetch();
        setIsPopUp(false);
@@ -144,7 +144,7 @@ console.error('Error adding reply', error)
  const handleUpvote = async (feedbackId) => {
    try {
      await axios.patch(
-       `https://product-feedback-app-omotayo21s-projects.vercel.app/api/feedbacks/feedback/${feedbackId}/upvotes?id=${String(feedbackId)}`,
+       `/api/feedbacks/feedback/${String(feedbackId)}/upvotes`,
        {
          dataId : userId._id
        }
