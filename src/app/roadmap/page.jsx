@@ -246,9 +246,7 @@ const PostCard = ({ post, status, borderColor, dotColor, refetch }) => {
   const handleUpvote = async (feedbackId) => {
     try {
       await axios.patch(
-        `http://localhost:3000/api/feedbacks/feedback/${feedbackId}/upvotes?id=${String(
-          feedbackId
-        )}`,
+        `/api/feedbacks/feedback/${String(feedbackId)}/upvotes`,
         {
           dataId: userId._id,
         }
