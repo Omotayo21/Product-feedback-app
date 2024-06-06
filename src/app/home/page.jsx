@@ -50,7 +50,7 @@ const PostList = () => {
  
   const handleUpvote = async (feedbackId) => {
     try {
-       await axios.patch(`api/feedbacks/feedback/${feedbackId}/upvotes?id=${feedbackId}`,{
+       await axios.patch(`api/feedbacks/feedback/${feedbackId}/upvotes`,{
         dataId
       })
          
