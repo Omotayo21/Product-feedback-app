@@ -14,7 +14,10 @@ export async function PATCH(request) {
 
    // const { searchParams } = new URL(request.url);
    // const feedbackId = searchParams.get("id");
-const feedbackId = request.url.split('/').pop()
+//const feedbackId = request.url.split('/').pop()
+
+    const urlParts = req.url.split('/');
+    const feedbackId = urlParts[urlParts.length - 2]
     const user = await User.findById(dataId);
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
