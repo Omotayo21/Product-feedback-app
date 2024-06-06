@@ -45,8 +45,12 @@ const comment = await Comment.findById(commentId);
   }
 }
 export async function DELETE(request) {
-  const { searchParams } = new URL(request.url);
-  const replyId = searchParams.get("id");
+  //const { searchParams } = new URL(request.url);
+ // const replyId = searchParams.get("id");
+ const urlParts = request.url.split('/');
+    const replyId = urlParts[urlParts.length - 2]
+
+  
   try {
      await Replies.findByIdAndDelete(replyId);
 
