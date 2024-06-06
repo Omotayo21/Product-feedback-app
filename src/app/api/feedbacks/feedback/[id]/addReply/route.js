@@ -16,7 +16,11 @@ export async function POST(request) {
    // const { searchParams } = new URL(request.url);
    // const commentId = searchParams.get("id");
     
-const commentId = request.url.split('/').pop()
+//const commentId = request.url.split('/').pop()
+const urlParts = request.url.split('/');
+    const commentId = urlParts[urlParts.length - 2]
+
+    
     const user = await User.findById(dataId);
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
