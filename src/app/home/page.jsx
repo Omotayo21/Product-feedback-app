@@ -40,14 +40,17 @@ const PostList = () => {
  }, []);
   
  const [selectedCategory, setSelectedCategory] = useState('All')
-  const { data: feedbacks, error, isLoading, refetch  } = useQuery({queryKey:['feedbacks'], queryFn: fetchPosts});
-  const {
-    data: user,
-    error: userError,
-    isLoading: userLoading,
-    
-  } = useQuery({ queryKey: ["user"], queryfn: fetchUser });
- 
+   const { data: feedbacks, error, isLoading, refetch } = useQuery(['feedbacks'], fetchPosts, {
+    staleTime: 0,
+    cacheTime: 0,
+    refetchOnWindowFocus: true,
+  });
+
+  const { data: user, error: userError, isLoading: userLoading } = useQuery(['user'], fetchUser, {
+    staleTime: 0,
+    cacheTime: 0,
+    refetchOnWindowFocus: true,
+  });
  
   const handleUpvote = async (feedbackId) => {
     try {
