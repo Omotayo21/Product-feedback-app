@@ -71,7 +71,7 @@ const Page = () => {
           />
           <div className=" inset-0 absolute pt-2 pl-4 flex flex-row justify-between pr-4">
             <div className="flex flex-col">
-              <h1 className=" font-semibold text-white">Rahman's space</h1>
+              <h1 className=" font-semibold text-white">Rahman&apos;s space</h1>
               <h2 className="text-gray-200 text-sm">Feedback Board</h2>
             </div>
            { !dropDown ? ( <List onClick={popOut} size={20} className="text-white mt-4 font-bold" /> ) : (
