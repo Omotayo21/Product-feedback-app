@@ -12,7 +12,13 @@ import commentIcon from "../../../public/shared/icon-comments.svg";
 import Loader from '../_components/Loader'
 import mobilebg from '../../../public/suggestions/mobile/background-header.png'
 
- const queryClient = new QueryClient();
+ const queryClient = new QueryClient({
+  defaultOptions : {
+   queries : {
+    refetchOnWindowFocus : true,
+    staleTime : 0,
+    cacheTinme : 0, }, },
+ });
 const fetchPosts = async () => {
   const { data } = await axios.get('/api/feedbacks/feedback');
   return data;
