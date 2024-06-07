@@ -2,7 +2,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { CaretUp } from "phosphor-react";
+import { CaretUp, List, X } from "phosphor-react";
 import Link from "next/link";
 
 import Image from "next/image";
@@ -12,17 +12,18 @@ import { Suspense } from "react";
 import Navbar from "./_components/Navbar";
 import empty from "../../public/suggestions/icon-suggestions.svg";
 import commentIcon from "../../public/shared/icon-comments.svg";
-
+import mobilebg from '../../public/suggestions/mobile/background-header.png'
 
 const Page = () => {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [posts, setPosts] = useState([]);
   const [userData, setUserData] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [filteredData, setFilteredData] = useState([]);
-
- 
+ const [dropDown, setDropDown] = useState(false);
+ // const filteredPosts = selectedCategory === 'All' ? feedbacks : feedbacks.filter((feedback) => feedback.category === selectedCategory )
   useEffect(() => {
     async function fetchData() {
       try {
@@ -36,7 +37,7 @@ const Page = () => {
       }
     }
     fetchData();
-    setCategoryFilter("All");
+    setSelectedCategory("All");
   }, []);
 
   const handleCategoryFilter = (category) => {
@@ -48,83 +49,101 @@ const Page = () => {
       );
       setFilteredData(filtered);
     }
-    setCategoryFilter(category);
+    setSelectedCategory(category);
   };
 
-  const handleSort = (criteria) => {
-    setFilteredData((prevData) => {
-      let sortedData = [...prevData];
-      switch (criteria) {
-        case "upvotesAsc":
-          sortedData.sort((a, b) => a.upvotes - b.upvotes);
-          break;
-        case "upvotesDesc":
-          sortedData.sort((a, b) => b.upvotes - a.upvotes);
-          break;
-        case "commentsAsc":
-          sortedData.sort(
-            (a, b) => (a.comments?.length || 0) - (b.comments?.length || 0)
-          );
-          break;
-        case "commentsDesc":
-          sortedData.sort(
-            (a, b) => (b.comments?.length || 0) - (a.comments?.length || 0)
-          );
-          break;
-        default:
-          break;
-      }
-      return sortedData;
-    });
-  };
+ 
+    const popOut = () => {
+      setDropDown(true);
+    };
+    const popIn = () => {
+      setDropDown(false);
+    }
 
-  return (
-    <div className="flex flex-row gap-x-8 sm:w-full">
-      <Navbar datalength={filteredData.length} onSort={handleSort} />
-      <Sidebar onCategoryFilter={handleCategoryFilter} />
-
-      <Suspense fallback={"loading data..."}>
-        <div className="flex flex-col gap-y-8 lg:mt-28 ml-8">
-          {filteredData.length > 0 ? (
-            filteredData.map((post) => (
-              <div key={post.id} className="">
-                {" "}
-                <Link
-                  href={`/login`}
-                  className="border-2 border-blue-700 cursor-pointer flex flex-row gap-x-8 lg:w-[65rem] sm:w-full sm:-ml-4 p-4 rounded-md bg-gray-100"
-                >
-                  <p className="flex lg:flex-col sm:flex-row sm:text-sm font-semibold bg-gray-300 p-2 w- lg:h-12 sm:h-10 rounded-md">
-                    <CaretUp size={12} className="lg:ml-1" /> {post.upvotes}
-                  </p>
-                  <div className="flex flex-col gap-y-2">
-                    <p className="text-black font-bold sm:text-sm">
-                      {post.title}
-                    </p>
-                    <p className="text-blue-900 text-[0.8rem]">
-                      {post.description}
-                    </p>
-                    <div className="rounded-md text-blue-900 font-bold bg-gray-200 p-2">
-                      <p className="text-[0.7rem]"> {post.category}</p>
-                    </div>
-                  </div>
-                  <p className="flex flex-end">
-                    <Image
-                      src={commentIcon}
-                      alt="comment icon"
-                      className="w-8 h-5"
-                    />
-                    <span>{post.comments?.length || 0}</span>
-                  </p>
-                  
-                </Link>
-              </div>
-            ))
-          ) : (
-            <Image src={empty} alt="empty image" className="ml-12 w-24 h-24" />
-          )}
+  return ( 
+      <div className="flex lg:flex-row sm:flex-col gap-x-8 sm:w-full sm:h-full">
+        <div className=" sm:w-full h-16 relative sm:fixed lg:hidden z-[9999]">
+          <Image
+            src={mobilebg}
+            alt=" mobile Background"
+            objectFit=""
+            className="w-full h-full object-cover   "
+          />
+          <div className=" inset-0 absolute pt-2 pl-4 flex flex-row justify-between pr-4">
+            <div className="flex flex-col">
+              <h1 className=" font-semibold text-white">Rahman's space</h1>
+              <h2 className="text-gray-200 text-sm">Feedback Board</h2>
+            </div>
+           { !dropDown ? ( <List onClick={popOut} size={20} className="text-white mt-4 font-bold" /> ) : (
+            <button onClick={popIn} className="h-8 text-white font-bold">
+              <X size={20} />
+            </button>)}
+          </div>
         </div>
-      </Suspense>
-    </div>
+        <Navbar datalength={filteredData.length} />
+        <div className="sm:hidden lg:flex">
+          <Sidebar
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
+        </div>
+        {dropDown && <Sidebar popIn={popIn} />}
+        <Suspense fallback={"loading ur fucking data"}>
+          <div className="flex flex-col gap-y-8 lg:mt-28 ml-8">
+            {filteredData.length > 0 ? (
+              filteredData.map((post) => {
+              
+                return (
+                  <div
+                    key={post._id}
+                    className="flex flex-col items-center justify-center sm:w-auto"
+                  >
+                    <Link
+                      href={`/login`}
+                      className="border-2 border-blue-700 cursor-pointer flex flex-row justify-between gap-x-8 lg:w-[65rem] sm:w-[22.8rem] md:w-[43rem] sm:-ml-7 lg:p-4 sm:p-1 rounded-md bg-gray-100 sm:mt-4 lg:mt-0"
+                    >
+                      <div className="flex flex-row gap-x-8">
+                        <button
+                         
+                          className={`flex lg:flex-col sm:flex-row sm:text-sm font-semibold  p-2  lg:h-12 sm:h-10 rounded-md`}
+                        >
+                          <CaretUp size={12} className="lg:ml-1" />{" "}
+                          {post.upvotes}
+                        </button>
+
+                        <div className="flex flex-col gap-y-2">
+                          <p className="text-black font-bold sm:text-sm">
+                            {post.title}
+                          </p>
+                          <p className="text-blue-900 text-[0.8rem]">
+                            {post.description}
+                          </p>
+                          <div className="rounded-md text-blue-900 font-bold bg-gray-200 p-2">
+                            <p className="text-[0.7rem]"> {post.category}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="mr-16 flex flex-row gap-x-1 ">
+                        <Image
+                          src={commentIcon}
+                          alt="comment icon"
+                          className="lg:w-6 lg:h-5 sm:w-8 sm:h-4 sm:mt-1"
+                        />
+                        <span className="font-bold">
+                          {post.comments?.length || 0}
+                        </span>
+                      </p>
+                    </Link>
+                  </div>
+                );
+              })
+            ) : (
+              <Image src={empty} alt="empty" className="ml-12 w-24 h-24" />
+            )}
+          </div>
+        </Suspense>
+      </div>
+    
   );
 };
 
