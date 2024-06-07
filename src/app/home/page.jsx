@@ -110,7 +110,7 @@ const PostList = () => {
             setSelectedCategory={setSelectedCategory}
           />
         </div>
-        {dropDown && <Sidebar popIn={popIn} />}
+        {dropDown && <Sidebar popIn={popIn} setSelectedCategory={setSelectedCategory} />}
         <Suspense fallback={"loading ur fucking data"}>
           <div className="flex flex-col gap-y-8 lg:mt-28 ml-8">
             {filteredPosts.length > 0 ? (
