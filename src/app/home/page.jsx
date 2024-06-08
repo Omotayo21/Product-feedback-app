@@ -30,7 +30,7 @@ const PostList = () => {
    const queryClient = useQueryClient(); 
    const [dropDown, setDropDown] = useState(false);
   const [dataId, setData] = useState("");
-  const [userId, setUserId] = useState({upvotedPosts : []}); 
+  const [userId, setUserId] = useState(null); 
   const [isLoading, setIsLoading] = useState(true)
   const [feedbacks, setFeedbacks] = useState([])
    const getUserDetails = async () => {
@@ -51,17 +51,27 @@ const PostList = () => {
     isLoading: userLoading,
     
   } = useQuery({ queryKey: ["user"], queryfn: fetchUser });
- 
+  const fetchFeedbacks = async () => {
+    try {
+    
+      const res = await axios.get(`/api/feedbacks/feedback/${dataId}`);
+      setFeedbacks(res.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+    useEffect(() => {
+      fetchFeedbacks()
+    }, [router.asPath])
  
   const handleUpvote = async (feedbackId) => {
     try {
-       await axios.patch(`api/feedbacks/feedback/${feedbackId}/upvotes`,{
+       await axios.patch(`api/feedbacks/feedback/${String(feedbackId)}/upvotes`,{
         dataId : userId._id
       })
-         
-     // queryClient.invalidateQueries({queryKey:['feedbacks']})
-     // queryClient.invalidateQueries({queryKey:['user']})
-      await fetchFeedbacks()
+    
+      await fetchFeedbacks();
    await  getUserDetails()
     
     } catch (error) {
@@ -80,19 +90,7 @@ const PostList = () => {
   }*/
  
 
-const fetchFeedbacks = async () => {
-  try {
-  // const timestamp = new Date().getTime()
-    const res = await axios.get(`/api/feedbacks/feedback/${dataId}`);
-    setFeedbacks(res.data);
-    setIsLoading(false);
-  } catch (error) {
-    console.log(error);
-  }
-};
-  useEffect(() => {
-    fetchFeedbacks()
-  }, [router.asPath])
+
 
   const filteredPosts = selectedCategory === 'All' ? feedbacks : feedbacks.filter((feedback) => feedback.category === selectedCategory )
  
@@ -136,9 +134,7 @@ const fetchFeedbacks = async () => {
           <div className="flex flex-col gap-y-8 lg:mt-28 ml-8">
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => {
-                const hasUpvoted = userId?.upvotedPosts.includes(
-                  post._id.toString()
-                );
+                userId && userId.upvotedPosts && userId.upvotedPosts.includes(post._id);
                 return (
                   <div
                     key={post._id}

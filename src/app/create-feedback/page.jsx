@@ -24,7 +24,7 @@ const CreateFeedback = () => {
   const categories = [ "enhancement", "feature", "bug", "UI", "UX"];
     const [title, setTitle] = useState('')
       const [description, setDescription] = useState('')
-      const [category, setCategory] = useState('Features')
+      const [category, setCategory] = useState('feature')
       const [dropdown, setDropdown] = useState(false)
       const [empty, setEmpty] = useState(false);
     const create = async (e) => {
