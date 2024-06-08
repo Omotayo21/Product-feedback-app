@@ -55,14 +55,14 @@ const PostList = () => {
  
   const handleUpvote = async (feedbackId) => {
     try {
-       await axios.patch(`api/feedbacks/feedback/${feedbackId}/upvotes?id=${feedbackId}`,{
-        dataId
+       await axios.patch(`api/feedbacks/feedback/${feedbackId}/upvotes`,{
+        dataId : userId._id
       })
          
      // queryClient.invalidateQueries({queryKey:['feedbacks']})
      // queryClient.invalidateQueries({queryKey:['user']})
-      fetchFeedbacks()
-    getUserDetails()
+      await fetchFeedbacks()
+   await  getUserDetails()
     
     } catch (error) {
      
@@ -136,7 +136,7 @@ const fetchFeedbacks = async () => {
           <div className="flex flex-col gap-y-8 lg:mt-28 ml-8">
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => {
-                const hasUpvoted = userId.upvotedPosts.includes(
+                const hasUpvoted = userId?.upvotedPosts.includes(
                   post._id.toString()
                 );
                 return (
