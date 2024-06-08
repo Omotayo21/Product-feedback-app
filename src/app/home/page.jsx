@@ -80,7 +80,7 @@ const PostList = () => {
   }
   useEffect(() => {
     fetchFeedbacks()
-  }, [router.asPath])
+  }, [])
 
   const filteredPosts = selectedCategory === 'All' ? feedbacks : feedbacks.filter((feedback) => feedback.category === selectedCategory )
  
