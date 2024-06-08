@@ -71,10 +71,7 @@ const PostList = () => {
   };
  const fetchFeedbacks = async () => {
     try {
-      const res = await axios.get('api/feedbacks/feedback', {
-      headers: {
-        'Cache-Control': 'no-cache',
-      }, })
+      const res = await axios.get('api/feedbacks/feedback', { cache : 'no-store'})
       setFeedbacks(res.data)
       setIsLoading(false)
     } catch (error) {
