@@ -82,7 +82,8 @@ const PostList = () => {
 
 const fetchFeedbacks = async () => {
   try {
-    const res = await axios.get('/api/feedbacks/feedback', {next : {revalidate: 60 }});
+   const timestamp = new Date().getTime()
+    const res = await axios.get(`/api/feedbacks/feedback/${timestamp}`);
     setFeedbacks(res.data);
     setIsLoading(false);
   } catch (error) {
