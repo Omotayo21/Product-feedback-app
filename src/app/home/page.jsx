@@ -1,5 +1,5 @@
  'use client'
-import { useQuery, useMutation, QueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, QueryClient, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
 import { useState, Suspense, useEffect } from 'react';
@@ -12,11 +12,14 @@ import commentIcon from "../../../public/shared/icon-comments.svg";
 import Loader from '../_components/Loader'
 import mobilebg from '../../../public/suggestions/mobile/background-header.png'
 
- const queryClient = new QueryClient();
+ //const queryClient = new QueryClient();
+
 const fetchPosts = async () => {
   const { data } = await axios.get('/api/feedbacks/feedback');
- 
+   
+   
   return data;
+   
 };
 const fetchUser = async () => {
   const { data } = await axios.get("/api/users/me");
@@ -26,6 +29,7 @@ const fetchUser = async () => {
 
 
 const PostList = () => {
+   const queryClient = useQueryClient(); 
    const [dropDown, setDropDown] = useState(false);
   const [dataId, setData] = useState("");
   const [userId, setUserId] = useState([]); 
@@ -37,22 +41,26 @@ const PostList = () => {
  };
  useEffect(() => {
    getUserDetails();
-  
  }, []);
   
  const [selectedCategory, setSelectedCategory] = useState('All')
-   const { data: feedbacks, error, isLoading, refetch } = useQuery(['feedbacks'], fetchPosts );
-
-  const { data: user, error: userError, isLoading: userLoading } = useQuery(['user'], fetchUser );
+  const { data: feedbacks, error, isLoading, refetch  } = useQuery({queryKey:['feedbacks'], queryFn: fetchPosts});
+  const {
+    data: user,
+    error: userError,
+    isLoading: userLoading,
+    
+  } = useQuery({ queryKey: ["user"], queryfn: fetchUser });
+ 
  
   const handleUpvote = async (feedbackId) => {
     try {
-       await axios.patch(`api/feedbacks/feedback/${feedbackId}/upvotes`,{
+       await axios.patch(`api/feedbacks/feedback/${feedbackId}/upvotes?id=${feedbackId}`,{
         dataId
       })
          
-      queryClient.invalidateQueries({queryKey:['feedbacks']})
-      queryClient.invalidateQueries({queryKey:['user']})
+     // queryClient.invalidateQueries({queryKey:['feedbacks']})
+     // queryClient.invalidateQueries({queryKey:['user']})
       refetch()
     getUserDetails()
     
