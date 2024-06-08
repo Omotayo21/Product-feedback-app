@@ -71,7 +71,7 @@ const PostList = () => {
         dataId : userId._id,
       })
     
-      fetchFeedbacks()
+      //fetchFeedbacks()
        getUserDetails()
     
     } catch (error) {
@@ -138,11 +138,7 @@ const PostList = () => {
                     >
                       <div className="flex flex-row gap-x-8">
                         <button
-                          onClick={(e) => {
-                            e.preventDefault();
-
-                            handleUpvote(post._id);
-                          }}
+                       
                           className={`flex lg:flex-col sm:flex-row sm:text-sm font-semibold ${
                             hasUpvoted
                               ? "bg-blue-700 text-white "
