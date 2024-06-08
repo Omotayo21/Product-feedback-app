@@ -30,7 +30,7 @@ const PostList = () => {
    const queryClient = useQueryClient(); 
    const [dropDown, setDropDown] = useState(false);
   const [dataId, setData] = useState("");
-  const [userId, setUserId] = useState({upvotedPosts :[]}); 
+  const [userId, setUserId] = useState(null); 
   const [isLoading, setIsLoading] = useState(true)
   const [feedbacks, setFeedbacks] = useState([])
    const getUserDetails = async () => {
@@ -62,8 +62,7 @@ const PostList = () => {
     }
   };
     useEffect(() => {
-      if(dataId){
-      fetchFeedbacks() }
+    fetchFeedbacks() 
     }, [router.asPath])
  
   const handleUpvote = async (feedbackId) => {
