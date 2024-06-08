@@ -71,7 +71,7 @@ const PostList = () => {
         dataId : userId._id,
       })
     
-      // fetchFeedbacks()
+      fetchFeedbacks()
        getUserDetails()
     
     } catch (error) {
