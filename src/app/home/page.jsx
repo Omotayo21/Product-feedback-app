@@ -134,7 +134,7 @@ const PostList = () => {
           <div className="flex flex-col gap-y-8 lg:mt-28 ml-8">
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => {
-                userId && userId.upvotedPosts && userId.upvotedPosts.includes(post._id);
+              const hasUpvoted =  userId && userId.upvotedPosts && userId.upvotedPosts.includes(post._id);
                 return (
                   <div
                     key={post._id}
