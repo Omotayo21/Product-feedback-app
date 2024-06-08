@@ -41,6 +41,7 @@ const PostList = () => {
  };
  useEffect(() => {
    getUserDetails();
+  refetch()
  }, []);
   
  const [selectedCategory, setSelectedCategory] = useState('All')
@@ -59,8 +60,8 @@ const PostList = () => {
         dataId
       })
          
-     // queryClient.invalidateQueries({queryKey:['feedbacks']})
-     // queryClient.invalidateQueries({queryKey:['user']})
+     queryClient.invalidateQueries({queryKey:['feedbacks']})
+     queryClient.invalidateQueries({queryKey:['user']})
       refetch()
     getUserDetails()
     
