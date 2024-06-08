@@ -7,9 +7,9 @@ import Image from 'next/image'
 import {toast} from 'react-toastify'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import {useQueryclient} from '@tanstack/react-query'
+import {useQueryClient} from '@tanstack/react-query'
 const CreateFeedback = () => {
-  const queryClient = useQueryclient()
+  const queryClient = useQueryClient()
   const router = useRouter()
   const [dataId, setData] = useState("nothing");
 
