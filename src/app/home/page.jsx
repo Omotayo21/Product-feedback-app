@@ -9,18 +9,15 @@ import Navbar from '../_components/Navbar';
 import { CaretUp, List, X } from 'phosphor-react';
 import empty from "../../../public/suggestions/illustration-empty.svg";
 import commentIcon from "../../../public/shared/icon-comments.svg";
-import Loader from '../_components/Loader'
+import Loader2 from '../_components/Loader2'
+import { useRouter } from 'next/navigation';
 import mobilebg from '../../../public/suggestions/mobile/background-header.png'
 
- //const queryClient = new QueryClient();
 
 const fetchPosts = async () => {
   const { data } = await axios.get('/api/feedbacks/feedback');
-   
-   
-  return data;
-   
-};
+   return data;
+   };
 const fetchUser = async () => {
   const { data } = await axios.get("/api/users/me");
   return data.data;
@@ -29,10 +26,13 @@ const fetchUser = async () => {
 
 
 const PostList = () => {
+  const router = useRouter()
    const queryClient = useQueryClient(); 
    const [dropDown, setDropDown] = useState(false);
   const [dataId, setData] = useState("");
   const [userId, setUserId] = useState([]); 
+  const [isLoading, setIsLoading] = useState(true)
+  const [feedbacks, setFeedbacks] = useState({})
    const getUserDetails = async () => {
    const res = await axios.get("/api/users/me");
    console.log(res.data);
@@ -41,11 +41,10 @@ const PostList = () => {
  };
  useEffect(() => {
    getUserDetails();
-  refetch()
  }, []);
   
  const [selectedCategory, setSelectedCategory] = useState('All')
-  const { data: feedbacks, error, isLoading, refetch  } = useQuery({queryKey:['feedbacks'], queryFn: fetchPosts});
+//  const { data: feedbacks, error, isLoading, refetch  } = useQuery({queryKey:['feedbacks'], queryFn: fetchPosts});
   const {
     data: user,
     error: userError,
@@ -60,9 +59,9 @@ const PostList = () => {
         dataId
       })
          
-     queryClient.invalidateQueries({queryKey:['feedbacks']})
-     queryClient.invalidateQueries({queryKey:['user']})
-      refetch()
+     // queryClient.invalidateQueries({queryKey:['feedbacks']})
+     // queryClient.invalidateQueries({queryKey:['user']})
+      fetchFeedbacks()
     getUserDetails()
     
     } catch (error) {
@@ -70,10 +69,18 @@ const PostList = () => {
       console.log(error)
     }
   };
-  if (isLoading || userLoading) return (<div><Loader /></div>);
-  if (error ) { console.log(error); return (<div>Error fetching posts</div>)};
-  if(!feedbacks || feedbacks.length === 0 ) {return (<div>No posts found</div>)}
- 
+ const fetchFeedbacks = async () => {
+    try {
+      const res = await axios.get('api/feedbacks/feedback')
+      setFeedbacks(res.data)
+      setIsLoading(false)
+    } catch (error) {
+     console.log(error) 
+    }
+  }
+  useEffect(() => {
+    fetchFeedbacks()
+  }, [router.asPath])
 
   const filteredPosts = selectedCategory === 'All' ? feedbacks : feedbacks.filter((feedback) => feedback.category === selectedCategory )
  
@@ -96,7 +103,7 @@ const PostList = () => {
           />
           <div className=" inset-0 absolute pt-2 pl-4 flex flex-row justify-between pr-4">
             <div className="flex flex-col">
-              <h1 className=" font-semibold text-white">Rahman&apos;s space</h1>
+              <h1 className=" font-semibold text-white">Rahman's space</h1>
               <h2 className="text-gray-200 text-sm">Feedback Board</h2>
             </div>
            { !dropDown ? ( <List onClick={popOut} size={20} className="text-white mt-4 font-bold" /> ) : (
