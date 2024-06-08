@@ -22,10 +22,8 @@ export async function GET(req) {
       .exec();*/
     const feedbacks = await Feedback.find().exec();
 
-    //return new NextResponse(JSON.stringify(feedbacks), { status: 200 });
-  const response = new NextResponse(JSON.stringify(feedbacks), { status: 200 });
-    response.headers.set('Cache-Control', 'no-store');
-    return response;
+    return new NextResponse(JSON.stringify(feedbacks), { status: 200 });
+  
   } catch (error) {
     console.error("Error fetching feedbacks:", error);
     return new NextResponse(JSON.stringify({ error: error.message }), {
