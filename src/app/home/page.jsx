@@ -30,9 +30,9 @@ const PostList = () => {
    const queryClient = useQueryClient(); 
    const [dropDown, setDropDown] = useState(false);
   const [dataId, setData] = useState("");
-  const [userId, setUserId] = useState([]); 
+  const [userId, setUserId] = useState({upvotedPosts : []}); 
   const [isLoading, setIsLoading] = useState(true)
-  const [feedbacks, setFeedbacks] = useState({})
+  const [feedbacks, setFeedbacks] = useState([])
    const getUserDetails = async () => {
    const res = await axios.get("/api/users/me");
    console.log(res.data);
@@ -80,7 +80,7 @@ const PostList = () => {
   }
   useEffect(() => {
     fetchFeedbacks()
-  }, [])
+  }, [router.asPath])
 
   const filteredPosts = selectedCategory === 'All' ? feedbacks : feedbacks.filter((feedback) => feedback.category === selectedCategory )
  
@@ -124,7 +124,7 @@ const PostList = () => {
           <div className="flex flex-col gap-y-8 lg:mt-28 ml-8">
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => {
-                const hasUpvoted = userId?.upvotedPosts.includes(
+                const hasUpvoted = userId.upvotedPosts.includes(
                   post._id.toString()
                 );
                 return (
