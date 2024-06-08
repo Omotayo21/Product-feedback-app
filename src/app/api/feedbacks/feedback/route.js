@@ -11,7 +11,7 @@ export async function GET(req) {
 
 
   try {
-    const feedbacks = await Feedback.find()
+    /*const feedbacks = await Feedback.find()
       .populate({
         path: "comments",
         populate: {
@@ -19,7 +19,8 @@ export async function GET(req) {
           populate: { path: "user" },
         },
       })
-      .exec();
+      .exec();*/
+    const feedbacks = await Feedback.find().exec();
 
     return new NextResponse(JSON.stringify(feedbacks), { status: 200 });
   
