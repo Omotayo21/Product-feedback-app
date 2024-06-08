@@ -34,7 +34,7 @@ const PostList = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [feedbacks, setFeedbacks] = useState([])
    const getUserDetails = async () => {
-   const res = await axios.get("/api/users/me");
+   const res = await axios.get("/api/users/me", {next : {revalidate: 60 }});
    console.log(res.data);
    setData(res.data.data._id);
    setUserId(res.data.data)
@@ -78,13 +78,11 @@ const PostList = () => {
      console.log(error) 
     }
   }*/
- const fetchCache = 'force-no-store';
+ 
 
 const fetchFeedbacks = async () => {
   try {
-    const res = await axios.get('/api/feedbacks/feedback', {
-      fetchCache: fetchCache
-    });
+    const res = await axios.get('/api/feedbacks/feedback', {next : {revalidate: 60 }});
     setFeedbacks(res.data);
     setIsLoading(false);
   } catch (error) {
