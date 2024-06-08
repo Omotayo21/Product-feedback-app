@@ -69,7 +69,7 @@ const PostList = () => {
       console.log(error)
     }
   };
- const fetchFeedbacks = async () => {
+ /*const fetchFeedbacks = async () => {
     try {
       const res = await axios.get('api/feedbacks/feedback', { cache : 'no-store'})
       setFeedbacks(res.data)
@@ -77,7 +77,20 @@ const PostList = () => {
     } catch (error) {
      console.log(error) 
     }
+  }*/
+ const fetchCache = 'force-no-store';
+
+const fetchFeedbacks = async () => {
+  try {
+    const res = await axios.get('/api/feedbacks/feedback', {
+      fetchCache: fetchCache
+    });
+    setFeedbacks(res.data);
+    setIsLoading(false);
+  } catch (error) {
+    console.log(error);
   }
+};
   useEffect(() => {
     fetchFeedbacks()
   }, [router.asPath])
