@@ -30,11 +30,11 @@ const PostList = () => {
    const queryClient = useQueryClient(); 
    const [dropDown, setDropDown] = useState(false);
   const [dataId, setData] = useState("");
-  const [userId, setUserId] = useState(null); 
+  const [userId, setUserId] = useState({upvotedPosts :[]}); 
   const [isLoading, setIsLoading] = useState(true)
   const [feedbacks, setFeedbacks] = useState([])
    const getUserDetails = async () => {
-   const res = await axios.get("/api/users/me", {next : {revalidate: 60 }});
+   const res = await axios.get("/api/users/me");
    console.log(res.data);
    setData(res.data.data._id);
    setUserId(res.data.data)
@@ -62,32 +62,25 @@ const PostList = () => {
     }
   };
     useEffect(() => {
-      fetchFeedbacks()
+      if(dataId){
+      fetchFeedbacks() }
     }, [router.asPath])
  
   const handleUpvote = async (feedbackId) => {
     try {
        await axios.patch(`api/feedbacks/feedback/${String(feedbackId)}/upvotes`,{
-        dataId : userId._id
+        dataId : userId._id,
       })
     
-      await fetchFeedbacks();
-   await  getUserDetails()
+      // fetchFeedbacks()
+       getUserDetails()
     
     } catch (error) {
      
       console.log(error)
     }
   };
- /*const fetchFeedbacks = async () => {
-    try {
-      const res = await axios.get('api/feedbacks/feedback', { cache : 'no-store'})
-      setFeedbacks(res.data)
-      setIsLoading(false)
-    } catch (error) {
-     console.log(error) 
-    }
-  }*/
+
  
 
 
@@ -122,7 +115,7 @@ const PostList = () => {
             </button>)}
           </div>
         </div>
-        <Navbar datalength={filteredPosts.length} />
+        <Navbar datalength={filteredPosts?.length || 0} />
         <div className="sm:hidden lg:flex">
           <Sidebar
             selectedCategory={selectedCategory}
