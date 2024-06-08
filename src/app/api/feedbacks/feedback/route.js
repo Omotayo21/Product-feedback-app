@@ -11,6 +11,8 @@ export async function GET(req) {
 
 
   try {
+    const urlParts = req.url.split('/');
+    const timestamp = urlParts.pop();
     /*const feedbacks = await Feedback.find()
       .populate({
         path: "comments",
@@ -20,6 +22,13 @@ export async function GET(req) {
         },
       })
       .exec();*/
+
+    if (!timestamp){
+      return new NextResponse(
+        JSON.stringify({ error: "Timestamp is required" }),
+        { status: 400 }
+      );
+    }
     const feedbacks = await Feedback.find().exec();
 
     return new NextResponse(JSON.stringify(feedbacks), { status: 200 });
