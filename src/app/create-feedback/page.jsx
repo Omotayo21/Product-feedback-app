@@ -7,8 +7,9 @@ import Image from 'next/image'
 import {toast} from 'react-toastify'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-
+import {useQueryclient} from '@tanstack/react-query'
 const CreateFeedback = () => {
+  const queryClient = useQueryclient()
   const router = useRouter()
   const [dataId, setData] = useState("nothing");
 
@@ -36,6 +37,7 @@ const CreateFeedback = () => {
             description,
             category,
           });
+          queryClient.invalidateQueries('feedbacks');
  router.push("/home");
  toast.success("Feedback created successfully");
  console.log("create success", response.data);
