@@ -37,7 +37,7 @@ const CreateFeedback = () => {
             description,
             category,
           });
-          queryClient.invalidateQueries('feedbacks');
+     
  router.push("/home");
  toast.success("Feedback created successfully");
  console.log("create success", response.data);
