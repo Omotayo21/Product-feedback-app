@@ -41,9 +41,9 @@ const PostList = () => {
  }, []);
   
  const [selectedCategory, setSelectedCategory] = useState('All')
-   const { data: feedbacks, error, isLoading, refetch } = useQuery(['feedbacks'], fetchPosts, );
+   const { data: feedbacks, error, isLoading, refetch } = useQuery(['feedbacks'], fetchPosts );
 
-  const { data: user, error: userError, isLoading: userLoading } = useQuery(['user'], fetchUser, );
+  const { data: user, error: userError, isLoading: userLoading } = useQuery(['user'], fetchUser );
  
   const handleUpvote = async (feedbackId) => {
     try {
