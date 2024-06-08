@@ -15,7 +15,7 @@ import mobilebg from '../../../public/suggestions/mobile/background-header.png'
  const queryClient = new QueryClient({});
 const fetchPosts = async () => {
   const { data } = await axios.get('/api/feedbacks/feedback');
- queryClient.invalidateQueries({ queryKey: ["feedbacks"] });
+ 
   return data;
 };
 const fetchUser = async () => {
